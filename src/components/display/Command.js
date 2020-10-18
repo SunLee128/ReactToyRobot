@@ -1,9 +1,9 @@
 import React from 'react'
 
-function Command({type}) {
+function Command({command, x, y, face}) {
     return (
         <div >
-            {type}
+            {command}, ({x},{y}),{face}
         </div>
     )
 }

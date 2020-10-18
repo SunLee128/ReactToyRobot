@@ -1,24 +1,26 @@
 import React from 'react'
 import Button from './Button'
 
-function ControlPad({commands, setCommands, currentLocation,setLocations,move }) {
+function ControlPad({commands,setCommands,currentFace, move, left }) {
 
-    const handleClick = (type, currentLocation) => {
-        setCommands([...commands, {command: type} ])
-        move(currentLocation)
-        console.log(currentLocation)
+    const handleMove = (currentFace) => {
+        move(currentFace)
+        // console.log(currentFace)
+    }
+
+    const handleLeft = (currentFace) => {
+        left(currentFace)
     }
 
     const handleReset = () => {
         setCommands([])
-        setLocations([])
     }
     return (
         <div>
-            <Button type='MOVE' handleClick={handleClick} currentLocation={currentLocation} />
-            <Button type='LEFT' handleClick={handleClick} currentLocation={currentLocation}/>
-            <Button type='RIGHT' handleClick={handleClick} currentLocation={currentLocation}/>
-            <Button type='RESET' handleClick={handleReset} currentLocation={currentLocation}/>
+            <Button name='MOVE' handleClick={handleMove} currentFace={currentFace} />
+            <Button name='LEFT' handleClick={handleLeft} currentFace={currentFace}/>
+            {/* <Button name='RIGHT' handleClick={handleClick} />  */}
+            <Button name='RESET' handleClick={handleReset} /> 
         </div>
     )
 }

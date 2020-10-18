@@ -1,4 +1,5 @@
 import React from 'react'
+
 function Cell({x, y}) {
     const style = {
         // backgroundColor:'red', 

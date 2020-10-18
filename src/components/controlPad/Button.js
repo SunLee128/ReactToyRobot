@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Button({type, handleClick, handleReset, currentLocation}) {
+function Button({name, handleClick, currentFace}) {
     const style = {
         background: "#DB3B03",
         width: '100px',
@@ -10,8 +10,8 @@ function Button({type, handleClick, handleReset, currentLocation}) {
         color: 'white'
     }
     return (
-        <div style={style} onClick={()=>handleClick(type, currentLocation)}>
-            {type}
+        <div style={style} onClick={()=>handleClick(currentFace)}>
+            {name}
         </div>
     )
 }

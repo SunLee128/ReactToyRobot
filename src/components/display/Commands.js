@@ -2,23 +2,21 @@ import React from 'react'
 
 import Command from './Command'
 
-function Commands({commands, setCommands}) {
-    const handleClick = (type) => {
-        setCommands([...commands, {command: type} ])
-    }
-
-    const handleReset = () => {
-        setCommands([])
-    }
+function Commands({commands}) {
 
     return (
         <div>
             <div>
                 
-            </div>
-            
-            <div>
-                {commands.map(c => <Command type={c.command}/>)}
+                {commands.map((c) => 
+                    <Command 
+                        command={c.command} 
+                        id={c.id} 
+                        x={c.x}
+                        y={c.y}
+                        face={c.face}
+                    />
+                )}
             </div>
         </div>
     )
