@@ -4,7 +4,17 @@ import Column from './Column'
 function Table() {
     const style = {
         display: 'flex',
-        margin: "10px"
+        // display: 'grid',
+        // margin: "10px",
+        // gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr",
+        // gridTemplateRows: "1fr 1fr 1fr 1fr 1fr",
+        // gap: "0px 0px",
+        // gridTemplateAreas: 
+        // ". . . . ."
+        // ". . . . ."
+        // ". . . . ."
+        // ". . . . ."
+        // ". . . . ."
     }
     return (
         <div style={style}>

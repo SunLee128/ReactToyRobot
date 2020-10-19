@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useReducer} from 'react'
 import uuid from 'react-uuid'
 import Commands  from './display/Commands'
 import ControlPad from './controlPad/ControlPad'
@@ -10,9 +10,26 @@ Todos
 - Back button
 - Robot
 - Highlight the current cell
+- Does a cell need state? true/false
 */
 
+// const ACTIONS = {
+//   MOVE: 'MOVE',
+//   LEFT: 'LEFT',
+//   RIGHT: 'RIGHT',
+//   PLACE: 'PLACE',
+//   BACK: 'BACK'
+// }
+// function reducer(state, action) {
+//   switch(action){
+//     case 'MOVE': 
+//   }
+// }
+
+
 function Game() {
+
+  // const [state, dispatch] = useReducer(reducer, [{ command: "PLACE", x: 0, y: 0, face:"NORTH"}])
     const faces = ["NORTH", "EAST", "SOUTH", "WEST"]
     const initialCommands= [
         {command: 'MOVE', x: 0, y: 1, face: "NORTH",id: uuid()},
@@ -40,10 +57,16 @@ function Game() {
       let currentFaceIndex = faces.indexOf(currentFace)
       let leftTurned = leftTurnedFaces[currentFaceIndex]
       setCommands(prevState => 
-        [...prevState, {command: "LEFT", x: currentX, y: currentY+1, face: leftTurned, id: uuid()}])
+        [...prevState, {command: "LEFT", x: currentX, y: currentY, face: leftTurned, id: uuid()}])
     }
 
-    console.log(left(currentFace))
+    const right = (currentFace) => {
+      let rightTurnedFaces = [faces[1], faces[2], faces[3], faces[0]]
+      let currentFaceIndex = faces.indexOf(currentFace)
+      let rightTurned = rightTurnedFaces[currentFaceIndex]
+      setCommands(prevState => 
+        [...prevState, {command: "RIGHT", x: currentX, y: currentY, face: rightTurned, id: uuid()}])
+    }
     
     const _moveNorth = (y) => {
         if (y < 4) {
@@ -141,6 +164,7 @@ function Game() {
               currentFace={currentFace}
               move={move}
               left={left}
+              right={right}
             />
             <Commands 
               commands={commands} 
