@@ -1,6 +1,7 @@
-import React from 'react'
+import React, {useState} from 'react'
 
 function Cell({x, y}) {
+    const [hasRobot, setHasRobot] = useState(false)
     const style = {
         // backgroundColor:'red', 
         border: 'black solid 1px',
@@ -9,7 +10,7 @@ function Cell({x, y}) {
     }
 
     return (
-        <div style={style} x={x} y={y}>
+        <div style={style} x={x} y={y} hasRobot={false}>
             {x},{y}
         </div>
     )

@@ -28,7 +28,6 @@ Todos
 
 
 function Game() {
-
   // const [state, dispatch] = useReducer(reducer, [{ command: "PLACE", x: 0, y: 0, face:"NORTH"}])
     const faces = ["NORTH", "EAST", "SOUTH", "WEST"]
     const initialCommands= [
