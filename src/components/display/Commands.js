@@ -2,13 +2,13 @@ import React from 'react'
 
 import Command from './Command'
 
-function Commands({commands}) {
+function Commands({state, }) {
 
     return (
         <div>
             <div>
                 
-                {commands.map((c) => 
+                {/* {state.map((c) => 
                     <Command 
                         command={c.command} 
                         id={c.id} 
@@ -16,7 +16,12 @@ function Commands({commands}) {
                         y={c.y}
                         face={c.face}
                     />
-                )}
+                )} */}
+                {state.command}
+                {state.x},
+                {state.y},
+                {state.face},
+                {state.history}
             </div>
         </div>
     )

@@ -1,4 +1,4 @@
-import React, {useState, useReducer} from 'react'
+import React, { useReducer} from 'react'
 import uuid from 'react-uuid'
 import Commands  from './display/Commands'
 import ControlPad from './controlPad/ControlPad'
@@ -37,8 +37,22 @@ const RIGHTFACES = {
 
 function reducer(state, action) {
   switch(action.type){
+    case ACTIONS.MOVE:
+      switch(state.face){
+        case "NORTH":
+          return {...state, y: state.y + 1}
+        case "SOUTH":
+          return {...state, y: state.y - 1}
+        case "EAST":
+          return {...state, x: state.x + 1}
+        case "WEST":
+          return {...state, x: state.x - 1}
+        default: return
+      }
     case ACTIONS.LEFT:
-      return [...state, {command: "LEFT", x: state[state.lenth-1].x, y: state.y, face: state.face, id: uuid()}]
+      return {...state,face: LEFTFACES[state.face]}
+    case ACTIONS.RIGHT:
+      return {...state,face: RIGHTFACES[state.face]}
     default:
       return state
   }
@@ -47,7 +61,7 @@ function reducer(state, action) {
 
 function Game() {
 
-  const faces = ["NORTH", "EAST", "SOUTH", "WEST"]
+  // const faces = ["NORTH", "EAST", "SOUTH", "WEST"]
   const initialValue= {
     command: 'MOVE', 
     x: 0, 
@@ -81,126 +95,127 @@ function Game() {
     //     [...prevState, {command: "LEFT", x: currentX, y: currentY, face: leftTurned, id: uuid()}])
     // }
 
-    const left = (currentFace) => {
-      let leftTurnedFaces = [faces[3], faces[0], faces[1], faces[2]]
-      let currentFaceIndex = faces.indexOf(currentFace)
-      let leftTurned = leftTurnedFaces[currentFaceIndex]
+    const move = () => {
+      dispatch({type: ACTIONS.MOVE})
+    }
+
+    const left = () => {
+      // let leftTurnedFaces = [faces[3], faces[0], faces[1], faces[2]]
+      // let currentFaceIndex = faces.indexOf(currentFace)
+      // let leftTurned = leftTurnedFaces[currentFaceIndex]
       dispatch({type: ACTIONS.LEFT})
     }
 
-    const right = (currentFace) => {
-      let rightTurnedFaces = [faces[1], faces[2], faces[3], faces[0]]
-      let currentFaceIndex = faces.indexOf(currentFace)
-      let rightTurned = rightTurnedFaces[currentFaceIndex]
-      setCommands(prevState => 
-        [...prevState, {command: "RIGHT", x: currentX, y: currentY, face: rightTurned, id: uuid()}])
-    }
-    
-    const _moveNorth = (y) => {
-        if (y < 4) {
-          setCommands(prevState => 
-            [...prevState, {command: "MOVE", x: currentX, y: currentY+1, face: currentFace, id: uuid()}])
-        }
-        else {
-          setCommands(prevState => 
-            [...prevState, {command: "Can't move forward", x: currentX, y: currentY, face: currentFace, id: uuid()}])
-        } 
+    const right = ()=> {
+      dispatch({type: ACTIONS.RIGHT})
     }
 
-    const _moveSouth = (y) => {
-      if (y > 0) {
-        setCommands(prevState => 
-          [...prevState, 
-            { command: "MOVE", 
-              x: currentX, 
-              y: currentY-1, 
-              face: currentFace, 
-              id: uuid()
-            }
-          ])
-      }
-      else {
-        setCommands(prevState => 
-          [...prevState, 
-            { command: "Can't move forward", 
-              x: currentX, 
-              y: currentY, 
-              face: currentFace, 
-              id: uuid()
-            }
-          ])
-      } 
-    }
-
-    const _moveEast = (x) => {
-      if (x < 4) {
-        setCommands(prevState => 
-          [...prevState, 
-            { command: "MOVE", 
-              x: currentX+1, 
-              y: currentY, 
-              face: currentFace, 
-              id: uuid()
-            }
-          ])
-      }
-      else {
-        setCommands(prevState => 
-          [...prevState, 
-            { command: "Can't move forward", 
-              x: currentX, 
-              y: currentY, 
-              face: currentFace, 
-              id: uuid()
-            }
-          ])
-      } 
-    }
+    // const right = (currentFace) => {
+    //   let rightTurnedFaces = [faces[1], faces[2], faces[3], faces[0]]
+    //   let currentFaceIndex = faces.indexOf(currentFace)
+    //   let rightTurned = rightTurnedFaces[currentFaceIndex]
+    //   setCommands(prevState => 
+    //     [...prevState, {command: "RIGHT", x: currentX, y: currentY, face: rightTurned, id: uuid()}])
+    // }
     
-    const _moveWest = (x) => {
-      if (x >0) {
-        setCommands(prevState => 
-          [...prevState, 
-            { command: "MOVE", 
-              x: currentX-1, 
-              y: currentY, 
-              face: currentFace, 
-              id: uuid()
-            }
-          ])
-      }
-      else {
-        setCommands(prevState => 
-          [...prevState, 
-            { command: "Can't move forward", 
-              x: currentX, 
-              y: currentY, 
-              face: currentFace, 
-              id: uuid()
-            }
-          ])
-      } 
-    }
+    // const _moveNorth = (y) => {
+    //     if (y < 4) {
+    //       setCommands(prevState => 
+    //         [...prevState, {command: "MOVE", x: currentX, y: currentY+1, face: currentFace, id: uuid()}])
+    //     }
+    //     else {
+    //       setCommands(prevState => 
+    //         [...prevState, {command: "Can't move forward", x: currentX, y: currentY, face: currentFace, id: uuid()}])
+    //     } 
+    // }
+
+    // const _moveSouth = (y) => {
+    //   if (y > 0) {
+    //     setCommands(prevState => 
+    //       [...prevState, 
+    //         { command: "MOVE", 
+    //           x: currentX, 
+    //           y: currentY-1, 
+    //           face: currentFace, 
+    //           id: uuid()
+    //         }
+    //       ])
+    //   }
+    //   else {
+    //     setCommands(prevState => 
+    //       [...prevState, 
+    //         { command: "Can't move forward", 
+    //           x: currentX, 
+    //           y: currentY, 
+    //           face: currentFace, 
+    //           id: uuid()
+    //         }
+    //       ])
+    //   } 
+    // }
+
+    // const _moveEast = (x) => {
+    //   if (x < 4) {
+    //     setCommands(prevState => 
+    //       [...prevState, 
+    //         { command: "MOVE", 
+    //           x: currentX+1, 
+    //           y: currentY, 
+    //           face: currentFace, 
+    //           id: uuid()
+    //         }
+    //       ])
+    //   }
+    //   else {
+    //     setCommands(prevState => 
+    //       [...prevState, 
+    //         { command: "Can't move forward", 
+    //           x: currentX, 
+    //           y: currentY, 
+    //           face: currentFace, 
+    //           id: uuid()
+    //         }
+    //       ])
+    //   } 
+    // }
+    
+    // const _moveWest = (x) => {
+    //   if (x >0) {
+    //     setCommands(prevState => 
+    //       [...prevState, 
+    //         { command: "MOVE", 
+    //           x: currentX-1, 
+    //           y: currentY, 
+    //           face: currentFace, 
+    //           id: uuid()
+    //         }
+    //       ])
+    //   }
+    //   else {
+    //     setCommands(prevState => 
+    //       [...prevState, 
+    //         { command: "Can't move forward", 
+    //           x: currentX, 
+    //           y: currentY, 
+    //           face: currentFace, 
+    //           id: uuid()
+    //         }
+    //       ])
+    //   } 
+    // }
     
     return (
         <div>
-            <ControlPad 
-              commands={commands} 
-              setCommands={setCommands} 
-              currentX={currentX}
-              currentY={currentY}
-              currentFace={currentFace}
+            <ControlPad
               move={move}
               left={left}
               right={right}
             />
             <Commands 
-              commands={commands} 
-              setCommands={setCommands} 
-              currentX={currentX}
-              currentY={currentY}
-              currentFace={currentFace}
               move={move}
+              left={left}
+              right={right}
+              state={state}
             />
             <Table />
         </div>
