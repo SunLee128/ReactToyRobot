@@ -13,51 +13,79 @@ Todos
 - Does a cell need state? true/false
 */
 
-// const ACTIONS = {
-//   MOVE: 'MOVE',
-//   LEFT: 'LEFT',
-//   RIGHT: 'RIGHT',
-//   PLACE: 'PLACE',
-//   BACK: 'BACK'
-// }
-// function reducer(state, action) {
-//   switch(action){
-//     case 'MOVE': 
-//   }
-// }
+const ACTIONS = {
+  MOVE: 'MOVE',
+  LEFT: 'LEFT',
+  RIGHT: 'RIGHT',
+  PLACE: 'PLACE',
+  BACK: 'BACK'
+}
+
+const LEFTFACES = {
+  NORTH : "WEST",
+  WEST : "SOUTH",
+  SOUTH: "EAST",
+  EAST: "NORTH"
+}
+
+const RIGHTFACES = {
+  NORTH : "EAST",
+  EAST: "SOUTH",
+  SOUTH: "WEST",
+  WEST : "NORTH",
+}
+
+function reducer(state, action) {
+  switch(action.type){
+    case ACTIONS.LEFT:
+      return [...state, {command: "LEFT", x: state[state.lenth-1].x, y: state.y, face: state.face, id: uuid()}]
+    default:
+      return state
+  }
+}
 
 
 function Game() {
 
-  // const [state, dispatch] = useReducer(reducer, [{ command: "PLACE", x: 0, y: 0, face:"NORTH"}])
-    const faces = ["NORTH", "EAST", "SOUTH", "WEST"]
-    const initialCommands= [
-        {command: 'MOVE', x: 0, y: 1, face: "NORTH",id: uuid()},
-        {command: 'LEFT', x: 1, y: 0, face: "NORTH",id: uuid()},
-        {command: 'RIGHT',x: 2, y: 4, face: "SOUTH", id: uuid()},
-    ]
+  const faces = ["NORTH", "EAST", "SOUTH", "WEST"]
+  const initialValue= {
+    command: 'MOVE', 
+    x: 0, 
+    y: 1, 
+    face: "NORTH",
+    history: []
+  }
+  
+  const [state, dispatch] = useReducer(reducer, initialValue)
 
-    const [commands, setCommands] = useState(initialCommands)
-    let currentX = commands[commands.length-1].x 
-    let currentY = commands[commands.length-1].y 
-    let currentFace = commands[commands.length-1].face 
+    // const [state, setCommands] = useState(initialCommands)
+    // let currentX = state[state.length-1].x 
+    // let currentY = state[state.length-1].y 
+    // let currentFace = state[state.length-1].face 
 
-    const move = (face) => {
-        switch(face){
-            case "NORTH": _moveNorth(currentY); break;
-            case "SOUTH": _moveSouth(currentY); break;
-            case "EAST": _moveEast(currentX); break;
-            case "WEST": _moveWest(currentX); break;
-            default: return
-        }
-    }
+    // const move = (face) => {
+    //     switch(face){
+    //         case "NORTH": _moveNorth(currentY); break;
+    //         case "SOUTH": _moveSouth(currentY); break;
+    //         case "EAST": _moveEast(currentX); break;
+    //         case "WEST": _moveWest(currentX); break;
+    //         default: return
+    //     }
+    // }
+
+    // const left = (currentFace) => {
+    //   let leftTurnedFaces = [faces[3], faces[0], faces[1], faces[2]]
+    //   let currentFaceIndex = faces.indexOf(currentFace)
+    //   let leftTurned = leftTurnedFaces[currentFaceIndex]
+    //   setCommands(prevState => 
+    //     [...prevState, {command: "LEFT", x: currentX, y: currentY, face: leftTurned, id: uuid()}])
+    // }
 
     const left = (currentFace) => {
       let leftTurnedFaces = [faces[3], faces[0], faces[1], faces[2]]
       let currentFaceIndex = faces.indexOf(currentFace)
       let leftTurned = leftTurnedFaces[currentFaceIndex]
-      setCommands(prevState => 
-        [...prevState, {command: "LEFT", x: currentX, y: currentY, face: leftTurned, id: uuid()}])
+      dispatch({type: ACTIONS.LEFT})
     }
 
     const right = (currentFace) => {
